@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при изменении размеров окна
     internal class _IRDPSessionEvents_OnSharedRectChangedEvent
     {
         public int left;

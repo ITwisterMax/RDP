@@ -1,18 +1,38 @@
 ﻿namespace Rdp.Terminal.Core.Client.Data
 {
-    // Интерфейс RDP менеджера
+    /// <summary>
+    ///     Remote terminal interface
+    /// </summary>
     public interface IRemoteTerminal
     {
-        // Масштабирование транслируемого экрана
+        /// <summary>
+        ///     Smart sizing
+        /// </summary>
         bool SmartSizing { get; set; }
 
-        // Начало соединения с сервером
-        void Connect(string connectionString, string groupName, string passowrd);
+        /// <summary>
+        ///     Connect to server
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        void Connect(string connectionString, string groupName, string password);
         
-        // Инициирует прослушиватель для приема обратных подключений
-        string StartReverseConnectListener(string connectionString, string groupName, string passowrd);
+        /// <summary>
+        ///     Start reverse connection listener
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        ///
+        /// <returns>string</returns>
+        string StartReverseConnectListener(string connectionString, string groupName, string password);
 
-        // Прекращение соединения с сервером
+        /// <summary>
+        ///     Disconect from server
+        /// </summary>
         void Disconnect();
     }
 }

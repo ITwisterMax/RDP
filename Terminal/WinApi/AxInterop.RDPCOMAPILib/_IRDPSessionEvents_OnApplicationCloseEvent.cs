@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при закрытии приложения
     internal class _IRDPSessionEvents_OnApplicationCloseEvent
     {
         public object pApplication;

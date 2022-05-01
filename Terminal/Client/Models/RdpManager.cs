@@ -3,57 +3,86 @@ using Rdp.Terminal.Core.Client.Data;
 
 namespace Rdp.Terminal.Core.Client.Models
 {
-    // RDP менеджер
+    /// <summary>
+    ///     RDP manager
+    /// </summary>
     public partial class RdpManager : IRemoteTerminal
     {
         private RemoteTeminalManager _manager;
 
-        // Масштабирование транслируемого экрана
         public bool SmartSizing { get; set; }
 
-        // Начало соединения с сервером
+        /// <summary>
+        ///     Start connection
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
         public void Connect(string connectionString, string groupName, string password)
         {
             CheckValid();
+
             _manager.SmartSizing = SmartSizing;
             _manager.Connect(connectionString, groupName, password);
         }
 
-        // Инициирует прослушиватель для приема обратных подключений
-        public string StartReverseConnectListener(string connectionString, string groupName, string passowrd)
+        /// <summary>
+        ///     Start reverse connection listener
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        ///
+        /// <returns>string</returns>
+        public string StartReverseConnectListener(string connectionString, string groupName, string password)
         {
             CheckValid();
             _manager.SmartSizing = SmartSizing;
-            return _manager.StartReverseConnectListener(connectionString, groupName, passowrd);
+
+            return _manager.StartReverseConnectListener(connectionString, groupName, password);
         }
 
-        // Прекращение соединения с сервером
+        /// <summary>
+        ///     Stop connection
+        /// </summary>
         public void Disconnect()
         {
             CheckValid();
             _manager.Disconnect();
         }
 
-        // Присоединение пользователей к серверу
+        /// <summary>
+        ///     Attach clients
+        /// </summary>
+        ///
+        /// <param name="manager">Manager</param>
         internal void Attach(RemoteTeminalManager manager)
         {
             Detach();
+
             _manager = manager;
+
             Subsribe();
         }
 
-        // Отсоединение пользователей от сервера 
+        /// <summary>
+        ///     Detach client
+        /// </summary>
         internal void Detach()
         {
             _manager = null;
         }
 
-        // Проверка экземпляра текущего RDP менеджера
+        /// <summary>
+        ///     Check current manager
+        /// </summary>
         private void CheckValid()
         {
             if (_manager == null)
             {
-                throw new NotSupportedException("RdpManager still not attached");
+                throw new NotSupportedException("RdpManager still not attached.");
             }
         }
     }

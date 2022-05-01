@@ -3,76 +3,58 @@ using RDPCOMAPILib;
 
 namespace Rdp.Terminal.Core.Client.Models
 {
-    // Реализация интерфеса при возникновении событий
+    /// <summary>
+    ///     Event subscriber class
+    /// </summary>
     public partial class RdpManager
     {
-        // Вызывается при закрытии приложения
         public event _IRDPSessionEvents_OnApplicationCloseEventHandler OnApplicationClose;
 
-        // Вызывается при открытии приложения
         public event _IRDPSessionEvents_OnApplicationOpenEventHandler OnApplicationOpen;
 
-        // Вызывается при обновлении приложения
         public event _IRDPSessionEvents_OnApplicationUpdateEventHandler OnApplicationUpdate;
 
-        // Вызывается при подключении нового пользователя
         public event _IRDPSessionEvents_OnAttendeeConnectedEventHandler OnAttendeeConnected;
 
-        // Вызывается при отключении пользователя
         public event _IRDPSessionEvents_OnAttendeeDisconnectedEventHandler OnAttendeeDisconnected;
 
-        // Вызывается при обновлении сессии
         public event _IRDPSessionEvents_OnAttendeeUpdateEventHandler OnAttendeeUpdate;
 
-        // Вызывается при приеме данных
         public event _IRDPSessionEvents_OnChannelDataReceivedEventHandler OnChannelDataReceived;
 
-        // Вызывается при отправке данных
         public event _IRDPSessionEvents_OnChannelDataSentEventHandler OnChannelDataSent;
 
-        // Вызывается при аутентификации пользователя
         public event EventHandler OnConnectionAuthenticated;
 
-        // Вызывается при установке соединения с сервером
         public event EventHandler OnConnectionEstablished;
 
-        // Вызывается при ошибке установления соединения с сервером
         public event EventHandler OnConnectionFailed;
 
-        // Вызывается при закрытии соединениея с сервером
         public event _IRDPSessionEvents_OnConnectionTerminatedEventHandler OnConnectionTerminated;
 
-        // Вызывается при изменении уровня доступа пользователя
         public event _IRDPSessionEvents_OnControlLevelChangeRequestEventHandler OnControlLevelChangeRequest;
 
-        // Вызывается при обработке ошибок сессии
         public event _IRDPSessionEvents_OnErrorEventHandler OnError;
 
-        // Вызывается при потере фокуса
         public event _IRDPSessionEvents_OnFocusReleasedEventHandler OnFocusReleased;
 
-        // Вызывается при остановке графического потока
         public event EventHandler OnGraphicsStreamPaused;
 
-        // Вызывается при возобновлении графического потока
         public event EventHandler OnGraphicsStreamResumed;
 
-        // Вызывается при изменении настроек рабочего стола
         public event _IRDPSessionEvents_OnSharedDesktopSettingsChangedEventHandler OnSharedDesktopSettingsChanged;
 
-        // Вызывается при изменении размеров окна
         public event _IRDPSessionEvents_OnSharedRectChangedEventHandler OnSharedRectChanged;
 
-        // Вызывается при закрытии окна
         public event _IRDPSessionEvents_OnWindowCloseEventHandler OnWindowClose;
 
-        // Вызывается при открытии окна
         public event _IRDPSessionEvents_OnWindowOpenEventHandler OnWindowOpen;
 
-        // Вызывается при обновлении окна
         public event _IRDPSessionEvents_OnWindowUpdateEventHandler OnWindowUpdate;
 
-        // Все обрабатываемые сервером события
+        /// <summary>
+        ///     All available events
+        /// </summary>
         private void Subsribe()
         {
             _manager.RdpViewer.OnApplicationClose += delegate(object application) { OnApplicationClose?.Invoke(application); };

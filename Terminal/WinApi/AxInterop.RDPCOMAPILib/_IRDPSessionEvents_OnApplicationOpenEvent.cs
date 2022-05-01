@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при открытии приложения
     internal class _IRDPSessionEvents_OnApplicationOpenEvent
     {
         public object pApplication;

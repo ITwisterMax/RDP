@@ -2,18 +2,28 @@
 
 namespace Rdp.Terminal.Core.Server.Models.Controls
 {
+    /// <summary>
+    ///     Trasnmitted data
+    /// </summary>
     public class Transmitted
     {
         private readonly Convertation _details;
+        
         private readonly string _path;
 
-        // Импорт методов и свойст класса Convertation
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         private Transmitted()
         {
             _details = new Convertation();
         }
 
-        // Инициализация информации
+        /// <summary>
+        ///     Initialize properties
+        /// </summary>
+        ///
+        /// <param name="path">Path</param>
         public Transmitted(string path) : this()
         {
             _path = path;
@@ -23,26 +33,45 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
             _details.Extension = Path.GetExtension(info.Name);
         }
 
-        // Преобразование из массива байт
+        /// <summary>
+        ///     Convert to server details
+        /// </summary>
+        ///
+        /// <param name="byteArrayDetails">Byte array</param>
         public Transmitted(byte[] byteArrayDetails) : this()
         {
             _details = Convertation.ConvertToDetails(byteArrayDetails);
         }
 
-        // Преобразование в массив байт 
+        /// <summary>
+        ///     Convert to byte array
+        /// </summary>
+        ///
+        /// <returns>byte[]</returns>
         public byte[] GetByteArrayDetails()
         {
             return Convertation.ConvertToByteArray(_details);
         }
 
-        // Получение размера
+        /// <summary>
+        ///     Get content length
+        /// </summary>
+        ///
+        /// <returns>long</returns>
         public long GetContentLength()
         {
             var info = new FileInfo(_path);
             return info.Length;
         }
 
-        // Чтение данных в буфер
+        /// <summary>
+        ///     Read byte array
+        /// </summary>
+        ///
+        /// <param name="buffer">Server buffer</param>
+        /// <param name="bufferOffset">Buffer offset</param>
+        /// <param name="count">Count</param>
+        /// <param name="offset">Offset</param>
         public void ReadBytes(byte[] buffer, int bufferOffset, int count, long offset)
         {
             using (var stream = new FileStream(_path, FileMode.Open, FileAccess.Read))
@@ -52,7 +81,14 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
             }
         }
 
-        // Запись данных из буфера
+        /// <summary>
+        ///     Writes data to buffer
+        /// </summary>
+        ///
+        /// <param name="path">Path</param>
+        /// <param name="content">Content</param>
+        /// <param name="bufferOffset">Buffer offset</param>
+        /// <param name="count">Count</param>
         public void WriteBytes(string path, byte[] content, int bufferOffset, int count)
         {
             using (var stream = new FileStream(path + _details.Name + _details.Extension, FileMode.Append, FileAccess.Write, FileShare.Write))

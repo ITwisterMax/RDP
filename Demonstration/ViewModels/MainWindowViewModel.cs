@@ -9,38 +9,32 @@ using RDPCOMAPILib;
 
 namespace Rdp.Demonstration.ViewModels
 {
-    // Логика работы главной формы
+    /// <summary>
+    ///     Main WPF class
+    /// </summary>
     public class MainWindowViewModel : NotificationObject
     {
-        // Набор параметров для подключения к серверу
         private string _serverConnectionText;
-        // Строка с событиями (для терминала / сервера)
+
         private string _terminalEventText;
-        // Выбранные действия
+
         private bool _actionChoosen = false;
 
-        // Конструктор
-        public MainWindowViewModel()
-        {
-            // Создание экземпляра RDP менеджера с автоматической масштабируемостью экрана
-            RdpManager = new RdpManager() { SmartSizing = true };
+        public RdpManager RdpManager { get; set; }
 
-            // Обработка прерывания сеансов трансляции
-            RdpManager.OnConnectionTerminated += (reason, info) => SessionTerminated();
-            RdpManager.OnGraphicsStreamPaused += (sender, args) => SessionTerminated();
-            RdpManager.OnAttendeeDisconnected += info => SessionTerminated();
+        public DelegateCommand ServerStartCommand { get; private set; }
 
-            // Определение логики работы основных команд
-            SingleStartCommand = new DelegateCommand(SingleStart, o => !_actionChoosen);
-            ConnectCommand = new DelegateCommand(Connect);
-            ServerStartCommand = new DelegateCommand(ServerStart, o => !_actionChoosen);
-            CopyCommand = new DelegateCommand(Copy);
-        }
+        public DelegateCommand CopyCommand { get; private set; }
 
-        // Строка для набора параметров подключения (клиент)
+        public DelegateCommand SingleStartCommand { get; private set; }
+
+        public DelegateCommand ConnectCommand { get; private set; }
+
         public string ConnectionText { get; set; }
 
-        // Строка с набором параметров подключения (сервер)
+        /// <summary>
+        ///     Server connection string
+        /// </summary>
         public string ServerConnectionText
         {
             get
@@ -54,22 +48,9 @@ namespace Rdp.Demonstration.ViewModels
             }
         }
 
-        // RDP менеджер
-        public RdpManager RdpManager { get; set; }
-
-        // Команда старта сервера (трансляция всего экрана)
-        public DelegateCommand ServerStartCommand { get; private set; }
-
-        // Команда копирования набора параметров для подключения
-        public DelegateCommand CopyCommand { get; private set; }
-
-        // Команда старта сервера (трансляция одного окна)
-        public DelegateCommand SingleStartCommand { get; private set; }
-
-        // Команда подключения к серверу
-        public DelegateCommand ConnectCommand { get; private set; }
-
-        // Строка с событиями (для терминала / сервера)
+        /// <summary>
+        ///     Events string
+        /// </summary>
         public string TerminalEventText
         {
             get
@@ -83,7 +64,9 @@ namespace Rdp.Demonstration.ViewModels
             }
         }
 
-        // Имя группы
+        /// <summary>
+        ///     Group name
+        /// </summary>
         private string GroupName
         {
             get
@@ -92,67 +75,97 @@ namespace Rdp.Demonstration.ViewModels
             }
         }
 
-        // Пароль
+        /// <summary>
+        ///     Password
+        /// </summary>
         private string Password
         {
             get
             {
-                return "58vabaha";
+                return "12345678";
             }
         }
 
-        // Команда старта сервера (трансляция одного окна)
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        public MainWindowViewModel()
+        {
+            RdpManager = new RdpManager() { SmartSizing = true };
+
+            RdpManager.OnConnectionTerminated += (reason, info) => SessionTerminated();
+            RdpManager.OnGraphicsStreamPaused += (sender, args) => SessionTerminated();
+            RdpManager.OnAttendeeDisconnected += info => SessionTerminated();
+
+            SingleStartCommand = new DelegateCommand(SingleStart, o => !_actionChoosen);
+            ConnectCommand = new DelegateCommand(Connect);
+            ServerStartCommand = new DelegateCommand(ServerStart, o => !_actionChoosen);
+            CopyCommand = new DelegateCommand(Copy);
+        }
+
+        /// <summary>
+        ///     Current window translation
+        /// </summary>
+        ///
+        /// <param name="obj">Object</param>
         private void SingleStart(object obj)
         {
-            // Обработка на случай неподходящей ОС
             if (!SupportUtils.CheckOperationSytem())
             {
                 UnsupportingVersion();
                 return;
             }
 
-            // Инициализация RDP сервера
             var server = new RdpSessionServer();
             server.Open();
 
-            // Получение полного имени приложения
             var executableName = GetApplicationName(AppDomain.CurrentDomain.FriendlyName);
-            
-            // Фильтр разрешенных окон
+
             server.ApplicationFilterEnabled = true;
-            // Находим нужное окно из списка
             foreach (RDPSRAPIApplication application in server.ApplicationList)
             {
                 application.Shared = GetApplicationName(application.Name) == executableName;
             }
 
-            // Генерация строки набора параметров для подключения
             ServerConnectionText = server.CreateInvitation(GroupName, Password);
 
-            // Старт сервера
             ServerStarted();
         }
 
-        // Получение полного имени приложения
+        /// <summary>
+        ///     Get application name
+        /// </summary>
+        ///
+        /// <param name="fileName">File name</param>
+        ///
+        /// <returns>string</returns>
         private string GetApplicationName(string fileName)
         {
             const string Executable = ".exe";
             return fileName.EndsWith(Executable) ? fileName.Substring(0, fileName.Length - Executable.Length) : fileName;
         }
 
-        // Ошибка: неподходящая ОС
+        /// <summary>
+        ///     OS error
+        /// </summary>
         private void UnsupportingVersion()
         {
-            MessageBox.Show("Support from Windows Vista only");
+            MessageBox.Show("Support from Windows Vista only.");
         }
 
-        // Ошибка: прекращение сессии
+        /// <summary>
+        ///     Session was terminated
+        /// </summary>
         private void SessionTerminated()
         {
-            MessageBox.Show("Session terminated");
+            MessageBox.Show("Session terminated.");
         }
 
-        // Команда копирования набора параметров для подключения
+        /// <summary>
+        ///     Copy connection parameters
+        /// </summary>
+        ///
+        /// <param name="obj">Object</param>
         private void Copy(object obj)
         {
             try
@@ -165,28 +178,30 @@ namespace Rdp.Demonstration.ViewModels
             }
         }
 
-        // Команда старта сервера (трансляция всего экрана)
+        /// <summary>
+        ///     All windows translation
+        /// </summary>
+        ///
+        /// <param name="obj">Object</param>
         private void ServerStart(object obj)
         {
-            // Обработка на случай неподходящей ОС
             if (!SupportUtils.CheckOperationSytem())
             {
                 UnsupportingVersion();
                 return;
             }
 
-            // Инициализация RDP сервера
             var server = new RdpSessionServer();
             server.Open();
 
-            // Генерация строки набора параметров для подключения
             ServerConnectionText = server.CreateInvitation(GroupName, Password);
 
-            // Старт сервера
             ServerStarted();
         }
 
-        // Старт сервера
+        /// <summary>
+        ///     Finish start server
+        /// </summary>
         private void ServerStarted()
         {
             _actionChoosen = true;
@@ -194,7 +209,11 @@ namespace Rdp.Demonstration.ViewModels
             SingleStartCommand.RaiseCanExecuteChanged();
         }
 
-        // Команда подключения к серверу
+        /// <summary>
+        ///     Connect to server
+        /// </summary>
+        ///
+        /// <param name="obj">Object</param>
         private void Connect(object obj)
         {
             RdpManager.Connect(ConnectionText, GroupName, Password);

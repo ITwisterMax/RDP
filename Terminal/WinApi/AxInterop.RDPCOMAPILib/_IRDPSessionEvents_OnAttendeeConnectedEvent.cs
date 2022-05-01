@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при подключении нового пользователя
     internal class _IRDPSessionEvents_OnAttendeeConnectedEvent
     {
         public object pAttendee;

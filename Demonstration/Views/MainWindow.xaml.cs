@@ -3,10 +3,14 @@ using Rdp.Demonstration.ViewModels;
 
 namespace Rdp.Demonstration.Views
 {
-    // Главное окно
+    /// <summary>
+    ///     Main window class
+    /// </summary>
     public partial class MainWindow : Window
     {
-        // Конструктор
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         public MainWindow()
         {
             DataContext = new MainWindowViewModel();

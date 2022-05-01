@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при закрытии окна
     internal class _IRDPSessionEvents_OnWindowCloseEvent
     {
         public object pWindow;

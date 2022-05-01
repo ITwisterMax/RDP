@@ -14,78 +14,54 @@ namespace AxRDPCOMAPILib
         private AxRDPViewerEventMulticaster eventMulticaster;
         private AxHost.ConnectionPointCookie cookie;
 
-        // Конструктор
         public AxRDPViewer() : base("32be5ed2-5c86-480f-a914-0ff8885a1b3f")
         {
         }
 
-        // Вызывается при закрытии приложения
         public event _IRDPSessionEvents_OnApplicationCloseEventHandler OnApplicationClose;
 
-        // Вызывается при открытии приложения
         public event _IRDPSessionEvents_OnApplicationOpenEventHandler OnApplicationOpen;
 
-        // Вызывается при обновлении приложения
         public event _IRDPSessionEvents_OnApplicationUpdateEventHandler OnApplicationUpdate;
 
-        // Вызывается при подключении нового пользователя
         public event _IRDPSessionEvents_OnAttendeeConnectedEventHandler OnAttendeeConnected;
 
-        // Вызывается при отключении пользователя
         public event _IRDPSessionEvents_OnAttendeeDisconnectedEventHandler OnAttendeeDisconnected;
 
-        // Вызывается при обновлении сессии
         public event _IRDPSessionEvents_OnAttendeeUpdateEventHandler OnAttendeeUpdate;
 
-        // Вызывается при приеме данных
         public event _IRDPSessionEvents_OnChannelDataReceivedEventHandler OnChannelDataReceived;
 
-        // Вызывается при отправке данных
         public event _IRDPSessionEvents_OnChannelDataSentEventHandler OnChannelDataSent;
 
-        // Вызывается при аутентификации пользователя
         public event EventHandler OnConnectionAuthenticated;
 
-        // Вызывается при установке соединения с сервером
         public event EventHandler OnConnectionEstablished;
 
-        // Вызывается при ошибке установления соединения с сервером
         public event EventHandler OnConnectionFailed;
 
-        // Вызывается при закрытии соединениея с сервером
         public event _IRDPSessionEvents_OnConnectionTerminatedEventHandler OnConnectionTerminated;
 
-        // Вызывается при изменении уровня доступа пользователя
         public event _IRDPSessionEvents_OnControlLevelChangeRequestEventHandler OnControlLevelChangeRequest;
 
-        // Вызывается при обработке ошибок сессии
         public event _IRDPSessionEvents_OnErrorEventHandler OnError;
 
-        // Вызывается при потере фокуса
         public event _IRDPSessionEvents_OnFocusReleasedEventHandler OnFocusReleased;
 
-        // Вызывается при остановке графического потока
         public event EventHandler OnGraphicsStreamPaused;
 
-        // Вызывается при возобновлении графического потока
         public event EventHandler OnGraphicsStreamResumed;
 
-        // Вызывается при изменении настроек рабочего стола
         public event _IRDPSessionEvents_OnSharedDesktopSettingsChangedEventHandler OnSharedDesktopSettingsChanged;
 
-        // Вызывается при изменении размеров окна
         public event _IRDPSessionEvents_OnSharedRectChangedEventHandler OnSharedRectChanged;
 
-        // Вызывается при закрытии окна
         public event _IRDPSessionEvents_OnWindowCloseEventHandler OnWindowClose;
 
-        // Вызывается при открытии окна
         public event _IRDPSessionEvents_OnWindowOpenEventHandler OnWindowOpen;
 
-        // Вызывается при обновлении окна
         public event _IRDPSessionEvents_OnWindowUpdateEventHandler OnWindowUpdate;
 
-        // Фильтрация отображаемых окон
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(215)]
@@ -103,7 +79,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Присоединенные пользователи
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(203)]
@@ -119,7 +94,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Действия при отключении от сервера
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(237)]
         public virtual string DisconnectedText
@@ -146,7 +120,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Набор параметров для установки соединения
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(204)]
@@ -162,7 +135,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Свойства
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(202)]
@@ -178,7 +150,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Автоматическое масштабирование
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(238)]
         public virtual bool SmartSizing
@@ -201,7 +172,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Менеджер
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [DispId(206)]
@@ -219,7 +189,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Соединение пользователся с сервером
         public virtual void Connect(string bstrConnectionString, string bstrName, string bstrPassword)
         {
             if (this.ocx == null)
@@ -236,7 +205,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Отключение от сервера
         public virtual void Disconnect()
         {
             if (this.ocx == null)
@@ -246,7 +214,6 @@ namespace AxRDPCOMAPILib
             this.ocx.Disconnect();
         }
 
-        // Изменение глубины цвета
         public virtual void RequestColorDepthChange(int bpp)
         {
             if (this.ocx == null)
@@ -258,7 +225,6 @@ namespace AxRDPCOMAPILib
             this.ocx.RequestColorDepthChange(bpp);
         }
 
-        // Уровень доступа пользователя
         public virtual void RequestControl(CTRL_LEVEL ctrlLevel)
         {
             if (this.ocx == null)
@@ -268,7 +234,6 @@ namespace AxRDPCOMAPILib
             this.ocx.RequestControl(ctrlLevel);
         }
 
-        // Начало обратного прослушивания
         public virtual string StartReverseConnectListener(
             string bstrConnectionString,
             string bstrUserName,
@@ -283,7 +248,6 @@ namespace AxRDPCOMAPILib
             return this.ocx.StartReverseConnectListener(bstrConnectionString, bstrUserName, bstrPassword);
         }
 
-        // Изменения при закрытии приложения
         internal void RaiseOnOnApplicationClose(object sender, _IRDPSessionEvents_OnApplicationCloseEvent e)
         {
             if (this.OnApplicationClose != null)
@@ -292,7 +256,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при открытии приложения
         internal void RaiseOnOnApplicationOpen(object sender, _IRDPSessionEvents_OnApplicationOpenEvent e)
         {
             if (this.OnApplicationOpen != null)
@@ -301,7 +264,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обновлении приложения
         internal void RaiseOnOnApplicationUpdate(object sender, _IRDPSessionEvents_OnApplicationUpdateEvent e)
         {
             if (this.OnApplicationUpdate != null)
@@ -310,7 +272,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при подключении нового пользователя
         internal void RaiseOnOnAttendeeConnected(object sender, _IRDPSessionEvents_OnAttendeeConnectedEvent e)
         {
             if (this.OnAttendeeConnected != null)
@@ -319,7 +280,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при отключении пользователя
         internal void RaiseOnOnAttendeeDisconnected(object sender, _IRDPSessionEvents_OnAttendeeDisconnectedEvent e)
         {
             if (this.OnAttendeeDisconnected != null)
@@ -328,7 +288,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обновлении сессии
         internal void RaiseOnOnAttendeeUpdate(object sender, _IRDPSessionEvents_OnAttendeeUpdateEvent e)
         {
             if (this.OnAttendeeUpdate != null)
@@ -337,7 +296,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при начале приема данных
         internal void RaiseOnOnChannelDataReceived(object sender, _IRDPSessionEvents_OnChannelDataReceivedEvent e)
         {
             if (this.OnChannelDataReceived != null)
@@ -346,7 +304,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при начале передачи данных
         internal void RaiseOnOnChannelDataSent(object sender, _IRDPSessionEvents_OnChannelDataSentEvent e)
         {
             if (this.OnChannelDataSent != null)
@@ -355,7 +312,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при аутентификации пользователя
         internal void RaiseOnOnConnectionAuthenticated(object sender, EventArgs e)
         {
             if (this.OnConnectionAuthenticated != null)
@@ -364,7 +320,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при установке соединения с сервером
         internal void RaiseOnOnConnectionEstablished(object sender, EventArgs e)
         {
             if (this.OnConnectionEstablished != null)
@@ -373,7 +328,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при ошибке установления соединения с сервером
         internal void RaiseOnOnConnectionFailed(object sender, EventArgs e)
         {
             if (this.OnConnectionFailed != null)
@@ -382,7 +336,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при закрытии соединениея с сервером
         internal void RaiseOnOnConnectionTerminated(object sender, _IRDPSessionEvents_OnConnectionTerminatedEvent e)
         {
             if (this.OnConnectionTerminated != null)
@@ -391,7 +344,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при изменении уровня доступа пользователя
         internal void RaiseOnOnControlLevelChangeRequest(
             object sender,
             _IRDPSessionEvents_OnControlLevelChangeRequestEvent e)
@@ -402,7 +354,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обработке ошибок сессии
         internal void RaiseOnOnError(object sender, _IRDPSessionEvents_OnErrorEvent e)
         {
             if (this.OnError != null)
@@ -411,7 +362,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при потере фокуса
         internal void RaiseOnOnFocusReleased(object sender, _IRDPSessionEvents_OnFocusReleasedEvent e)
         {
             if (this.OnFocusReleased != null)
@@ -420,7 +370,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при остановке графического потока
         internal void RaiseOnOnGraphicsStreamPaused(object sender, EventArgs e)
         {
             if (this.OnGraphicsStreamPaused != null)
@@ -429,7 +378,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при возобновлении графического потока
         internal void RaiseOnOnGraphicsStreamResumed(object sender, EventArgs e)
         {
             if (this.OnGraphicsStreamResumed != null)
@@ -438,7 +386,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обновлении настроек рабочего стола
         internal void RaiseOnOnSharedDesktopSettingsChanged(
             object sender,
             _IRDPSessionEvents_OnSharedDesktopSettingsChangedEvent e)
@@ -449,7 +396,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обновлении размеров окна
         internal void RaiseOnOnSharedRectChanged(object sender, _IRDPSessionEvents_OnSharedRectChangedEvent e)
         {
             if (this.OnSharedRectChanged != null)
@@ -458,7 +404,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при закрытии окна
         internal void RaiseOnOnWindowClose(object sender, _IRDPSessionEvents_OnWindowCloseEvent e)
         {
             if (this.OnWindowClose != null)
@@ -467,7 +412,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при открытии окна
         internal void RaiseOnOnWindowOpen(object sender, _IRDPSessionEvents_OnWindowOpenEvent e)
         {
             if (this.OnWindowOpen != null)
@@ -476,7 +420,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Изменения при обновлении окна
         internal void RaiseOnOnWindowUpdate(object sender, _IRDPSessionEvents_OnWindowUpdateEvent e)
         {
             if (this.OnWindowUpdate != null)
@@ -485,7 +428,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Связь с ActiveX (способ трансляции)
         protected override void AttachInterfaces()
         {
             try
@@ -498,7 +440,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Подготовка к прослушиванию событий
         protected override void CreateSink()
         {
             try
@@ -515,7 +456,6 @@ namespace AxRDPCOMAPILib
             }
         }
 
-        // Прекращение прослушивания событий
         protected override void DetachSink()
         {
             try

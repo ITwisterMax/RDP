@@ -4,9 +4,18 @@ using System.Text;
 
 namespace Rdp.Terminal.Core.Server.Models.Controls
 {
+	/// <summary>
+	///		Hash function class
+	/// </summary>
     public static class SHA256
     {
-		// Арифметические операции
+		/// <summary>
+		///		Operations
+		/// </summary>
+		///
+		/// <param name="a/">Operand a</param>
+		/// <param name="b">Operand b</param>
+		/// <param name="c">Operand c</param>
 		static void DBL_INT_ADD(ref uint a, ref uint b, uint c)
 		{
 			if (a > 0xffffffff - c) ++b; a += c;
@@ -40,7 +49,9 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			return (ROTRIGHT(x, 17) ^ ROTRIGHT(x, 19) ^ ((x) >> 10));
 		}
 
-		// Инициализация
+		/// <summary>
+		///		Initialize parameters
+		/// </summary>
 		struct SHA256_CTX
 		{
 			public byte[] data;
@@ -49,7 +60,6 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			public uint[] state;
 		}
 
-		// Первые 32 бита дробной части кубических корней первых 64 простых чисел
 		static uint[] k = {
 			0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
 			0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
@@ -61,7 +71,12 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
 		};
 
-		// Вычисление a, b, ..., g, h и обновление значений хэша
+		/// <summary>
+		///		Main function
+		/// </summary>
+		///
+		/// <param name="ctx">CTX parameter</param>
+		/// <param name="data">Data</param>
 		static void SHA256Transform(ref SHA256_CTX ctx, byte[] data)
 		{
 			uint a, b, c, d, e, f, g, h, i, j, t1, t2;
@@ -106,7 +121,11 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			ctx.state[7] += h;
 		}
 
-		// Первые 32 бита дробной части квадратных корней первых 8 простых чисел
+		/// <summary>
+		///		Initialize first simple numbers
+		/// </summary>
+		///
+		/// <param name="ctx">CTX parameter</param>
 		static void SHA256Init(ref SHA256_CTX ctx)
 		{
 			ctx.datalen = 0;
@@ -122,7 +141,13 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			ctx.state[7] = 0x5be0cd19;
 		}
 
-		// Основной цикл
+		/// <summary>
+		///		Update current string
+		/// </summary>
+		///
+		/// <param name="ctx">CTX parameter</param>
+		/// <param name="data">Data</param>
+		/// <param name="len">Length</param>
 		static void SHA256Update(ref SHA256_CTX ctx, byte[] data, uint len)
 		{
 			for (uint i = 0; i < len; ++i)
@@ -139,7 +164,12 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			}
 		}
 
-		// Финализация
+		/// <summary>
+		///		Finalization method
+		/// </summary>
+		///
+		/// <param name="ctx">CTX parameter</param>
+		/// <param name="hash">Hash</param>
 		static void SHA256Final(ref SHA256_CTX ctx, byte[] hash)
 		{
 			uint i = ctx.datalen;
@@ -185,7 +215,13 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 			}
 		}
 
-		// Получение хэш-значения
+		/// <summary>
+		///		Get SHA-256 hash
+		/// </summary>
+		///
+		/// <param name="data">Data</param>
+		///
+		/// <returns>BigInteger</returns>
 		public static BigInteger GET_SHA256(string data)
 		{
 			SHA256_CTX ctx = new SHA256_CTX();

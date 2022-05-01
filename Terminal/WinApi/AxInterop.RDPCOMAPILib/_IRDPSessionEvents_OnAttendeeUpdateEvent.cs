@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при обновлении сессии
     internal class _IRDPSessionEvents_OnAttendeeUpdateEvent
     {
         public object pAttendee;

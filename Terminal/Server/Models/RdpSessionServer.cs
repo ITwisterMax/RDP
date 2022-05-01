@@ -3,22 +3,28 @@ using RDPCOMAPILib;
 
 namespace Rdp.Terminal.Core.Server.Models
 {
-    // Rdp сервер
+    /// <summary>
+    ///     RDP server class
+    /// </summary>
     public class RdpSessionServer : IDisposable
     {
-        // Rdp сессия
+        /// <summary>
+        ///     RDP session
+        /// </summary>
         private readonly RDPSession _rdpSession;
         
-        // Конструктор
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         public RdpSessionServer()
         {
-            // Создание экземпляра RDP сессии с глубиной цвета 8
             _rdpSession = new RDPSession { colordepth = 8 };
-            // Уровень доступа пользователя
             _rdpSession.add_OnAttendeeConnected(OnAttendeeConnected);
         }
         
-        // Фильтр разрешенных окон
+        /// <summary>
+        ///     Filter available windows
+        /// </summary>
         public bool ApplicationFilterEnabled
         {
             get
@@ -31,7 +37,9 @@ namespace Rdp.Terminal.Core.Server.Models
             }
         }
 
-        // Список разрешенных окон
+        /// <summary>
+        ///     Available windows list
+        /// </summary>
         public RDPSRAPIApplicationList ApplicationList
         {
             get
@@ -40,44 +48,66 @@ namespace Rdp.Terminal.Core.Server.Models
             }
         }
 
-        // Открытие сервера
+        /// <summary>
+        ///     Open RDP session
+        /// </summary>
         public void Open()
         {
             _rdpSession.Open();
         }
 
-        // Закрытие сервера
+        /// <summary>
+        ///     Close RDP session
+        /// </summary>
         public void Close()
         {
             _rdpSession.Close();
         }
 
-        // Остановка сервера
+        /// <summary>
+        ///     Pause RDP session
+        /// </summary>
         public void Pause()
         {
             _rdpSession.Pause();
         }
 
-        // Возобновление сервера
+        /// <summary>
+        ///     Resume RDP session
+        /// </summary>
         public void Resume()
         {
             _rdpSession.Resume();
         }
 
-        // Соединение с клиентом
+        /// <summary>
+        ///     Connect to client
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection parameters</param>
         public void ConnectToClient(string connectionString)
         {
             _rdpSession.ConnectToClient(connectionString);
         }
 
-        // Генерация набора параметров для подключения
+        /// <summary>
+        ///     Create connection parameters    
+        /// </summary>
+        ///
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        ///
+        /// <returns>string</returns>
         public string CreateInvitation(string groupName, string password)
         {
             var invitation = _rdpSession.Invitations.CreateInvitation(null, groupName, password, 1);
+            
             return invitation.ConnectionString;
         }
 
-        // Закрытие сервера
+        /// <summary>
+        ///     Dispose connection
+        /// </summary>
         public void Dispose()
         {
             try
@@ -97,7 +127,11 @@ namespace Rdp.Terminal.Core.Server.Models
             }
         }
         
-        // Уровень доступа пользователя
+        /// <summary>
+        ///     Attendee connected
+        /// </summary>
+        ///
+        /// <param name="pAttendee">Parameter</param>
         private void OnAttendeeConnected(object pAttendee)
         {
             var attendee = (IRDPSRAPIAttendee)pAttendee;

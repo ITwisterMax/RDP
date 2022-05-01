@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при открытии окна
     internal class _IRDPSessionEvents_OnWindowOpenEvent
     {
         public object pWindow;

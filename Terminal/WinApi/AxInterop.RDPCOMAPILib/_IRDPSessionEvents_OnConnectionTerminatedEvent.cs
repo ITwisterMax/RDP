@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при закрытии соединениея с сервером
     internal class _IRDPSessionEvents_OnConnectionTerminatedEvent
     {
         public int discReason;

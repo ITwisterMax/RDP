@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при изменении настроек рабочего стола
     internal class _IRDPSessionEvents_OnSharedDesktopSettingsChangedEvent
     {
         public int width;

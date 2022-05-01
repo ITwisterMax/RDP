@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при отправке данных
     internal class _IRDPSessionEvents_OnChannelDataSentEvent
     {
         public object pChannel;

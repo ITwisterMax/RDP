@@ -1,6 +1,5 @@
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при потере фокуса
     internal class _IRDPSessionEvents_OnFocusReleasedEvent
     {
         public int iDirection;

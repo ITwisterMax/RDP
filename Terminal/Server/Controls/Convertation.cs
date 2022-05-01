@@ -4,17 +4,27 @@ using System.Xml.Serialization;
 
 namespace Rdp.Terminal.Core.Server.Models.Controls
 {
+    /// <summary>
+    ///     Serialize data
+    /// </summary>
     [Serializable]
     public class Convertation
     {
         public string Name { get; set; }
+
         public string Extension { get; set; }
 
+        /// <summary>
+        ///     Convert to byte array
+        /// </summary>
+        ///
+        /// <param name="details">Details</param>
+        /// 
+        /// <returns>byte[]</returns>
         public static byte[] ConvertToByteArray(Convertation details)
         {
             byte[] serializedDetails;
 
-            // xml-сериализация информации
             using (var memoryStream = new MemoryStream())
             {
                 var xmlSerializer = new XmlSerializer(typeof(Convertation));
@@ -27,13 +37,18 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
                 memoryStream.Read(serializedDetails, memoryStreamOffset, serializedDetails.Length);
             }
 
-            // сериализованный массив байтов
             return serializedDetails;
         }
 
+        /// <summary>
+        ///     Convert to details
+        /// </summary>
+        ///
+        /// <param name="byteArrayDetails">Byte array</param>
+        /// 
+        /// <returns>Convertation</returns>
         public static Convertation ConvertToDetails(byte[] byteArrayDetails)
         {
-            // xml-десериализация информации
             using (var memoryStream = new MemoryStream())
             {
                 const int memoryStreamOffset = 0;
@@ -43,7 +58,6 @@ namespace Rdp.Terminal.Core.Server.Models.Controls
 
                 var xmlSerializer = new XmlSerializer(typeof(Convertation));
 
-                // десериализованная информация
                 return (Convertation)xmlSerializer.Deserialize(memoryStream);
             }
         }

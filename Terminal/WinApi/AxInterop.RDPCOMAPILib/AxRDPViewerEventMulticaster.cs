@@ -1,23 +1,19 @@
 using System;
 using System.Runtime.InteropServices;
-
 using RDPCOMAPILib;
 
 namespace AxRDPCOMAPILib
 {
-    // Реакции на события
     [ClassInterface(ClassInterfaceType.None)]
     internal class AxRDPViewerEventMulticaster : _IRDPSessionEvents
     {
         private AxRDPViewer parent;
 
-        // Конструктор
         public AxRDPViewerEventMulticaster(AxRDPViewer parent)
         {
             this.parent = parent;
         }
 
-        // Вызывается при закрытии приложения
         public virtual void OnApplicationClose(object pApplication)
         {
             _IRDPSessionEvents_OnApplicationCloseEvent _IRDPSessionEventsOnApplicationCloseEvent =
@@ -25,7 +21,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnApplicationClose(this.parent, _IRDPSessionEventsOnApplicationCloseEvent);
         }
 
-        // Вызывается при открытии приложения
         public virtual void OnApplicationOpen(object pApplication)
         {
             _IRDPSessionEvents_OnApplicationOpenEvent _IRDPSessionEventsOnApplicationOpenEvent =
@@ -33,7 +28,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnApplicationOpen(this.parent, _IRDPSessionEventsOnApplicationOpenEvent);
         }
 
-        // Вызывается при обновлении приложения
         public virtual void OnApplicationUpdate(object pApplication)
         {
             _IRDPSessionEvents_OnApplicationUpdateEvent _IRDPSessionEventsOnApplicationUpdateEvent =
@@ -41,7 +35,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnApplicationUpdate(this.parent, _IRDPSessionEventsOnApplicationUpdateEvent);
         }
 
-        // Вызывается при подключении нового пользователя
         public virtual void OnAttendeeConnected(object pAttendee)
         {
             _IRDPSessionEvents_OnAttendeeConnectedEvent _IRDPSessionEventsOnAttendeeConnectedEvent =
@@ -49,7 +42,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnAttendeeConnected(this.parent, _IRDPSessionEventsOnAttendeeConnectedEvent);
         }
 
-        // Вызывается при отключении пользователя
         public virtual void OnAttendeeDisconnected(object pDisconnectInfo)
         {
             _IRDPSessionEvents_OnAttendeeDisconnectedEvent _IRDPSessionEventsOnAttendeeDisconnectedEvent =
@@ -57,7 +49,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnAttendeeDisconnected(this.parent, _IRDPSessionEventsOnAttendeeDisconnectedEvent);
         }
 
-        // Вызывается при обновлении сессии
         public virtual void OnAttendeeUpdate(object pAttendee)
         {
             _IRDPSessionEvents_OnAttendeeUpdateEvent _IRDPSessionEventsOnAttendeeUpdateEvent =
@@ -65,7 +56,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnAttendeeUpdate(this.parent, _IRDPSessionEventsOnAttendeeUpdateEvent);
         }
 
-        // Вызывается при приеме данных
         public virtual void OnChannelDataReceived(object pChannel, int lAttendeeId, string bstrData)
         {
             _IRDPSessionEvents_OnChannelDataReceivedEvent _IRDPSessionEventsOnChannelDataReceivedEvent =
@@ -73,7 +63,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnChannelDataReceived(this.parent, _IRDPSessionEventsOnChannelDataReceivedEvent);
         }
 
-        // Вызывается при отправке данных
         public virtual void OnChannelDataSent(object pChannel, int lAttendeeId, int bytesSent)
         {
             _IRDPSessionEvents_OnChannelDataSentEvent _IRDPSessionEventsOnChannelDataSentEvent =
@@ -81,28 +70,24 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnChannelDataSent(this.parent, _IRDPSessionEventsOnChannelDataSentEvent);
         }
 
-        // Вызывается при аутентификации пользователя
         public virtual void OnConnectionAuthenticated()
         {
             EventArgs eventArg = new EventArgs();
             this.parent.RaiseOnOnConnectionAuthenticated(this.parent, eventArg);
         }
 
-        // Вызывается при установке соединения с сервером
         public virtual void OnConnectionEstablished()
         {
             EventArgs eventArg = new EventArgs();
             this.parent.RaiseOnOnConnectionEstablished(this.parent, eventArg);
         }
 
-        // Вызывается при ошибке установления соединения с сервером
         public virtual void OnConnectionFailed()
         {
             EventArgs eventArg = new EventArgs();
             this.parent.RaiseOnOnConnectionFailed(this.parent, eventArg);
         }
 
-        // Вызывается при закрытии соединениея с сервером
         public virtual void OnConnectionTerminated(int discReason, int extendedInfo)
         {
             _IRDPSessionEvents_OnConnectionTerminatedEvent _IRDPSessionEventsOnConnectionTerminatedEvent =
@@ -110,7 +95,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnConnectionTerminated(this.parent, _IRDPSessionEventsOnConnectionTerminatedEvent);
         }
 
-        // Вызывается при изменении уровня доступа пользователя
         public virtual void OnControlLevelChangeRequest(object pAttendee, CTRL_LEVEL requestedLevel)
         {
             _IRDPSessionEvents_OnControlLevelChangeRequestEvent _IRDPSessionEventsOnControlLevelChangeRequestEvent =
@@ -120,7 +104,6 @@ namespace AxRDPCOMAPILib
                 _IRDPSessionEventsOnControlLevelChangeRequestEvent);
         }
 
-        // Вызывается при обработке ошибок сессии
         public virtual void OnError(object errorInfo)
         {
             _IRDPSessionEvents_OnErrorEvent _IRDPSessionEventsOnErrorEvent =
@@ -128,7 +111,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnError(this.parent, _IRDPSessionEventsOnErrorEvent);
         }
 
-        // Вызывается при потере фокуса
         public virtual void OnFocusReleased(int iDirection)
         {
             _IRDPSessionEvents_OnFocusReleasedEvent _IRDPSessionEventsOnFocusReleasedEvent =
@@ -136,21 +118,18 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnFocusReleased(this.parent, _IRDPSessionEventsOnFocusReleasedEvent);
         }
 
-        // Вызывается при остановке графического потока
         public virtual void OnGraphicsStreamPaused()
         {
             EventArgs eventArg = new EventArgs();
             this.parent.RaiseOnOnGraphicsStreamPaused(this.parent, eventArg);
         }
 
-        // Вызывается при возобновлении графического потока
         public virtual void OnGraphicsStreamResumed()
         {
             EventArgs eventArg = new EventArgs();
             this.parent.RaiseOnOnGraphicsStreamResumed(this.parent, eventArg);
         }
 
-        // Вызывается при изменении настроек рабочего стола
         public virtual void OnSharedDesktopSettingsChanged(int width, int height, int colordepth)
         {
             _IRDPSessionEvents_OnSharedDesktopSettingsChangedEvent _IRDPSessionEventsOnSharedDesktopSettingsChangedEvent
@@ -160,7 +139,6 @@ namespace AxRDPCOMAPILib
                 _IRDPSessionEventsOnSharedDesktopSettingsChangedEvent);
         }
 
-        // Вызывается при изменении размеров окна
         public virtual void OnSharedRectChanged(int left, int top, int right, int bottom)
         {
             _IRDPSessionEvents_OnSharedRectChangedEvent _IRDPSessionEventsOnSharedRectChangedEvent =
@@ -168,7 +146,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnSharedRectChanged(this.parent, _IRDPSessionEventsOnSharedRectChangedEvent);
         }
 
-        // Вызывается при закрытии окна
         public virtual void OnWindowClose(object pWindow)
         {
             _IRDPSessionEvents_OnWindowCloseEvent _IRDPSessionEventsOnWindowCloseEvent =
@@ -176,7 +153,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnWindowClose(this.parent, _IRDPSessionEventsOnWindowCloseEvent);
         }
 
-        // Вызывается при открытии окна
         public virtual void OnWindowOpen(object pWindow)
         {
             _IRDPSessionEvents_OnWindowOpenEvent _IRDPSessionEventsOnWindowOpenEvent =
@@ -184,7 +160,6 @@ namespace AxRDPCOMAPILib
             this.parent.RaiseOnOnWindowOpen(this.parent, _IRDPSessionEventsOnWindowOpenEvent);
         }
 
-        // Вызывается при обновлении окна
         public virtual void OnWindowUpdate(object pWindow)
         {
             _IRDPSessionEvents_OnWindowUpdateEvent _IRDPSessionEventsOnWindowUpdateEvent =

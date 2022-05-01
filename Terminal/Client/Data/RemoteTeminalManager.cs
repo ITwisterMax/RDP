@@ -4,13 +4,18 @@ using Rdp.Terminal.Core.Client.Controls;
 
 namespace Rdp.Terminal.Core.Client.Data
 {
-    // Логика работы соединения в обе стороны
+    /// <summary>
+    ///     Remote terminl manager class
+    /// </summary>
     internal class RemoteTeminalManager : IRemoteTerminal
     {
-        // Взаимодействие клиент-сервер
         private readonly AxRDPViewer _axRdpViewer;
 
-        // Конструктор
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
+        ///
+        /// <param name="axRdpViewer">RDP viewer</param>
         public RemoteTeminalManager(AxRDPViewer axRdpViewer)
         {
             if (axRdpViewer == null)
@@ -21,7 +26,9 @@ namespace Rdp.Terminal.Core.Client.Data
             _axRdpViewer = axRdpViewer;
         }
 
-        // Масштабируемость
+        /// <summary>
+        ///     Smart sizing
+        /// </summary>
         public bool SmartSizing
         {
             get
@@ -34,7 +41,9 @@ namespace Rdp.Terminal.Core.Client.Data
             }
         }
 
-        // Ссылка на экземпляр
+        /// <summary>
+        ///     RDP viewer
+        /// </summary>
         internal AxRDPViewer RdpViewer
         {
             get
@@ -43,19 +52,35 @@ namespace Rdp.Terminal.Core.Client.Data
             }
         }
 
-        // Начало соединения с сервером
-        public void Connect(string connectionString, string groupName, string passowrd)
+        /// <summary>
+        ///     Connect to server
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        public void Connect(string connectionString, string groupName, string password)
         {
-            _axRdpViewer.Connect(connectionString, groupName, passowrd);
+            _axRdpViewer.Connect(connectionString, groupName, password);
         }
 
-        // Инициирует прослушиватель для приема обратных подключений
-        public string StartReverseConnectListener(string connectionString, string groupName, string passowrd)
+        /// <summary>
+        ///     Start reverse connection listener
+        /// </summary>
+        ///
+        /// <param name="connectionString">Connection string</param>
+        /// <param name="groupName">Group name</param>
+        /// <param name="password">Password</param>
+        ///
+        /// <returns>string</returns>
+        public string StartReverseConnectListener(string connectionString, string groupName, string password)
         {
-            return _axRdpViewer.StartReverseConnectListener(connectionString, groupName, passowrd);
+            return _axRdpViewer.StartReverseConnectListener(connectionString, groupName, password);
         }
 
-        // Прекращение соединения с сервером
+        /// <summary>
+        ///     Disconect from server
+        /// </summary>
         public void Disconnect()
         {
             _axRdpViewer.Disconnect();

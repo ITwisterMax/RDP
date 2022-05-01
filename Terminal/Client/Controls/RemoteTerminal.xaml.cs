@@ -1,22 +1,29 @@
 ﻿using System.Windows;
 using Rdp.Terminal.Core.Client.Data;
 using Rdp.Terminal.Core.Client.Models;
+
 namespace Rdp.Terminal.Core.Client.Controls
 {
-    // Логика работы RemoteTerminal.xaml
+    /// <summary>
+    ///     Remote terminal class
+    /// </summary>
     public partial class RemoteTerminal
     {
-        // Rdp менеджер свойств
         public static DependencyProperty RdpManagerProperty;
+        
         internal readonly RemoteTeminalManager Manager;
 
-        // Инициализация свойства зависимости
+        /// <summary>
+        ///     Initialize dependencies
+        /// </summary>
         static RemoteTerminal()
         {
             RemoteTeminalBehavior.InitializeDependencyProperties();
         }
 
-        // Конструктор
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         public RemoteTerminal()
         {
             DataContext = this;
@@ -24,7 +31,9 @@ namespace Rdp.Terminal.Core.Client.Controls
             Manager = new RemoteTeminalManager(RdpViewer);
         }
 
-        // Получение и установление событий на стороне пользователя
+        /// <summary>
+        ///     RDP manager
+        /// </summary>
         public RdpManager RdpManager
         {
             get

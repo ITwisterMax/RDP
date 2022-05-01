@@ -5,41 +5,53 @@ using System.Windows.Threading;
 
 namespace Rdp.Demonstration.PropertiesAndCommands
 {
+    /// <summary>
+    ///     Event notification class
+    /// </summary>
     [Serializable]
-    // Класс для поддержки элементов с сигналами событий
     public abstract class NotificationObject : INotifyPropertyChanged
     {
-        // Конструктор
+        /// <summary>
+        ///     Default constructor
+        /// </summary>
         protected NotificationObject()
         {
         }
 
-        // Вызывается при изменении свойств компонента   
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // Вызывается при изменении одного свойства компонента (установка этого изменения)
+        /// <summary>
+        ///     Raise property changed
+        /// </summary>
+        ///
+        /// <param name="propertyName">Property name</param>
         protected virtual void RaisePropertyChanged(string propertyName)
         {
             if (PropertyChanged == null)
             {
                 return;
             }
+
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Вызывается при изменении нескольких свойств компонента (установка этих изменений)
+        /// <summary>
+        ///     Raise property changed
+        /// </summary>
+        ///
+        /// <param name="propertyNames">Property names</param>
         protected void RaisePropertyChanged(params string[] propertyNames)
         {
             if (PropertyChanged == null)
             {
                 return;
             }
+
             if (propertyNames == null)
             {
                 throw new ArgumentNullException(nameof(propertyNames));
             }
 
-            // Преобразование массива параметров в массив строк и перебор каждого
             string[] strArrays = propertyNames;
             foreach (string propertyName in strArrays)
             {
@@ -47,7 +59,11 @@ namespace Rdp.Demonstration.PropertiesAndCommands
             }
         }
 
-        // Вызывается при изменении приотритетного свойства компонента на основе выражения свойста (установка этого изменения)
+        /// <summary>
+        ///     Raise property changed
+        /// </summary>
+        ///
+        /// <param name="propertyExpression">Property expression</param>
         protected void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             if (PropertyChanged == null)
@@ -55,8 +71,8 @@ namespace Rdp.Demonstration.PropertiesAndCommands
                 return;
             }
 
-            // Получение имени свойства и установка изменения
             var propertyName = PropertySupport.ExtractPropertyName<T>(propertyExpression);
+
             if (!Dispatcher.CurrentDispatcher.CheckAccess())
             {
                 Dispatcher.CurrentDispatcher.Invoke(new Action(() => RaisePropertyChanged(propertyName)));

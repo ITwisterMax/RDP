@@ -2,7 +2,6 @@ using RDPCOMAPILib;
 
 namespace AxRDPCOMAPILib
 {
-    // Вызывается при изменении уровня доступа пользователя
     internal class _IRDPSessionEvents_OnControlLevelChangeRequestEvent
     {
         public object pAttendee;
